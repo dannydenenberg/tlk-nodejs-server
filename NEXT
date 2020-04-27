@@ -1,0 +1,12 @@
+NEXT UP:
+
+- info reactions to disconnect, connect, etc.
+- whisper (private messaging)
+- showing the time on each person's text message
+- end-to-end encryption
+- checks for other person viewing
+  + client: on message read (room), 
+            on message sent, 
+            when a focus happens emit to server message read
+- show current users
+- fix ID situation (should be created on client and sent to server)

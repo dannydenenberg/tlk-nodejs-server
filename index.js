@@ -109,30 +109,26 @@ io.on("connection", (socket) => {
    * Must convert time within the server response here.
    * room, msg, and time are all strings.
    */
-  socket.on(db.socket_routes.CHAT_MESSAGE, (room, msg, time) => {
-    console.log("message: " + msg);
+  socket.on(db.socket_routes.CHAT_MESSAGE, (room, message) => {
+    console.log("message: " + message.text);
     console.log(`id: ${socket.id}`);
 
-    let UTCTimeString = db.convertDateToUTC(new Date(time)).toString();
+    message.time = db.convertDateToUTC(new Date(message.time)).toString();
 
     // AFTER new day broadcast, then send chat.
     // Broadcast does NOT send back to the original sender.
-    socket
-      .to(room)
-      .broadcast.emit(
-        db.socket_routes.CHAT_MESSAGE,
-        msg,
-        db.getNameFromID(room, socket.id),
-        UTCTimeString
-      );
+    socket.to(room).broadcast.emit(db.socket_routes.CHAT_MESSAGE, message);
 
-    db.addChatToRoom(
-      room,
-      socket.id,
-      msg,
-      UTCTimeString,
-      db.message_types.CHAT
-    );
+    // message was sent successfully
+    io.to(socket.id).emit(db.socket_routes.MESSAGE_SENT);
+
+    db.addChatToRoom(room, message);
+  });
+
+  // Whenever someone sees a message broadcast to everyone, so the sender can recieve the check
+  socket.on(db.socket_routes.MESSAGE_READ, (room) => {
+    console.log("Read.");
+    socket.to(room).broadcast.emit(db.socket_routes.MESSAGE_READ);
   });
 
   /**

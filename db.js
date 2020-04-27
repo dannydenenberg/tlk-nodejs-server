@@ -10,6 +10,8 @@ const message_types = {
 };
 
 const socket_routes = {
+  MESSAGE_READ: "messageread",
+  MESSAGE_SENT: "messagesent",
   NEW_USER: "newuser",
   ERROR: "error",
   PERSON_JOIN: "personjoined",
@@ -27,17 +29,8 @@ const socket_routes = {
  * @param {Date as a string} time
  * These are encrypted WHEN they arrive from the client.
  */
-function addChatToRoom(room, socketID, msg, time, type) {
-  // set id to 1 plus the number of messages
-  let id = rooms[room].messages.length + 1;
-
-  rooms[room].messages.push({
-    name: rooms[room].people[socketID],
-    text: msg,
-    time,
-    type,
-    id,
-  });
+function addChatToRoom(room, message) {
+  rooms[room].messages.push(message);
 }
 
 /**

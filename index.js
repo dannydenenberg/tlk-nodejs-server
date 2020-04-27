@@ -177,10 +177,7 @@ io.on("connection", (socket) => {
       db.addChatToRoom(
         room,
         socket.id,
-        `<strong>${db.getNameFromID(
-          room,
-          socket.id
-        )}</strong> has left the chat`,
+        `${db.getNameFromID(room, socket.id)} has left the chat`,
         new Date(),
         db.message_types.INFO
       );

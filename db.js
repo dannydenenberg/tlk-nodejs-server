@@ -6,16 +6,17 @@ let rooms = {};
 const message_types = {
   CHAT: "chat",
   INFO: "info",
+  USER_DISCONNECT: "userdisconnected",
 };
 
 const socket_routes = {
-  NEW_USER: "new user",
+  NEW_USER: "newuser",
   ERROR: "error",
-  PERSON_JOIN: "person joined",
-  CHAT_MESSAGE: "chat message",
+  PERSON_JOIN: "personjoined",
+  CHAT_MESSAGE: "chatmessage",
   WHISPER: "whisper",
-  USER_DISCONNECT: "user disconnected",
-  CHAT_HISTORY: "chat history",
+  USER_DISCONNECT: "userdisconnected",
+  CHAT_HISTORY: "chathistory",
 };
 
 /**
@@ -40,9 +41,8 @@ function addChatToRoom(room, socketID, msg, time, type) {
 }
 
 /**
- * Given a room, return the chat history of that room.
+ * Given a room, return the messages.
  * @param {Name of room} room
- * Messages are DECRYPTED by the client AFTER being sent back.
  */
 function chatHistory(room) {
   return rooms[room].messages;

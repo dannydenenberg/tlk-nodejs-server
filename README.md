@@ -1,2 +1,2 @@
 # tlk-nodejs-server
-The server to the fastes end-to-end encrypted, URL-based chat app.
+The server to the fastest end-to-end encrypted, URL-based chat app.

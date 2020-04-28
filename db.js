@@ -62,6 +62,17 @@ function correctPassword(room, password) {
 }
 
 /**
+ * Returns an array of the NAMES of the users.
+ */
+function getUserNames(room) {
+  let names = [];
+  for (let id in rooms[room].people) {
+    names.push(rooms[room].people[id]);
+  }
+  return names;
+}
+
+/**
  * Creates a new room with the given room name and password.
  * @param {Room name} room
  * @param {Hashed password} password
@@ -265,4 +276,5 @@ module.exports = {
   message_types,
   socket_routes,
   rooms,
+  getUserNames,
 };

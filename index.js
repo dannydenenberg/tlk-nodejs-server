@@ -92,9 +92,11 @@ io.on("connection", (socket) => {
         socket.to(room).broadcast.emit(db.socket_routes.PERSON_JOIN, name);
 
         // send all of the previous chats back to that person
+        // also send the list of USERS
         io.to(socket.id).emit(
           db.socket_routes.CHAT_HISTORY,
-          db.chatHistory(room)
+          db.chatHistory(room),
+          db.getUserNames(room)
         );
       } else {
         io.to(socket.id).emit("error", "unauthorized user");
